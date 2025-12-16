@@ -1,0 +1,54 @@
+import { API } from "../constants/api";
+import { PAGINATION } from "../constants/pagination";
+import { User, FilterParams } from "../../types/user";
+import { translations } from "../../translations";
+
+export async function fetchUsers(
+  page: number = PAGINATION.DEFAULT_PAGE,
+  limit: number = PAGINATION.DEFAULT_LIMIT,
+  filters: FilterParams = {}
+): Promise<{
+  users: User[];
+  totalCount: number;
+}> {
+  const params = new URLSearchParams();
+  params.append("_page", page.toString());
+  params.append("_limit", limit.toString());
+
+  if (filters.search) {
+    params.append("q", filters.search);
+  }
+
+  if (filters.countryId) {
+    params.append("country.id", filters.countryId);
+  }
+
+  if (filters.roleName) {
+    params.append("role.name", filters.roleName);
+  }
+
+  const url = `${API.BASE_URL}${API.ENDPOINTS.USERS}?${params.toString()}`;
+
+  try {
+    const response = await fetch(url, {
+      next: { revalidate: 0 },
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `${translations.errors.fetchUsersFailed} ${response.statusText}`
+      );
+    }
+
+    const users: User[] = await response.json();
+    const totalCount = parseInt(
+      response.headers.get("X-Total-Count") || "0",
+      10
+    );
+
+    return { users, totalCount };
+  } catch (error) {
+    console.error(translations.errors.fetchUsersError, error);
+    return { users: [], totalCount: 0 };
+  }
+}

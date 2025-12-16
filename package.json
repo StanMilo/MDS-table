@@ -4,7 +4,7 @@
   "description": "Minimal JSON Server API with fake data generation",
   "main": "index.js",
   "scripts": {
-    "seed": "ts-node scripts/seed.ts",
+    "seed": "tsx scripts/seed.ts",
     "dev": "json-server --watch db.json --port 1008",
     "start": "npm run seed && json-server --watch db.json --port 1008",
     "clean": "rimraf db.json",
@@ -35,6 +35,7 @@
     "@types/node": "^20.10.6",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.3.3"
   }
 }

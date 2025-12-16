@@ -22,6 +22,16 @@ export const translations = {
   errors: {
     fetchUsersFailed: "Failed to fetch users:",
     fetchUsersError: "Error fetching users:",
+    loadUsersError: "Error loading users:",
+  },
+  // Filter labels
+  filters: {
+    search: "Search",
+    searchPlaceholder: "Search by name or email...",
+    country: "Country",
+    role: "Role",
+    allCountries: "All Countries",
+    allRoles: "All Roles",
   },
 } as const;
 

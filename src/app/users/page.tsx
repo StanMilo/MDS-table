@@ -1,22 +1,28 @@
 import { Container, Typography, Box } from "@mui/material";
-import UsersTable from "./components/UsersTable";
-import { PAGINATION } from "./constants";
-import { translations } from "./translations";
+import UsersTable from "./UsersTable";
+import { PAGINATION } from "../../lib/constants/pagination";
+import { translations } from "../../translations";
+import { parseQueryParams } from "../../lib/navigation/queryParams";
 
-interface HomeProps {
+interface UsersPageProps {
   searchParams: Promise<{
     page?: string;
     limit?: string;
+    search?: string;
+    countryId?: string;
+    roleName?: string;
   }>;
 }
 
-export default async function Home({ searchParams }: HomeProps) {
+export default async function UsersPage({ searchParams }: UsersPageProps) {
   const params = await searchParams;
-  const page = parseInt(params?.page || PAGINATION.DEFAULT_PAGE.toString(), 10);
-  const limit = parseInt(
-    params?.limit || PAGINATION.DEFAULT_LIMIT.toString(),
-    10
-  );
+  const queryParams = parseQueryParams(params);
+
+  const page = queryParams.page || PAGINATION.DEFAULT_PAGE;
+  const limit = queryParams.limit || PAGINATION.DEFAULT_LIMIT;
+  const search = queryParams.search;
+  const countryId = queryParams.countryId;
+  const roleName = queryParams.roleName;
 
   return (
     <Container maxWidth="lg">
@@ -43,7 +49,13 @@ export default async function Home({ searchParams }: HomeProps) {
             {translations.page.subtitle}
           </Typography>
         </Box>
-        <UsersTable page={page} limit={limit} />
+        <UsersTable
+          page={page}
+          limit={limit}
+          search={search}
+          countryId={countryId}
+          roleName={roleName}
+        />
       </Box>
     </Container>
   );
