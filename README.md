@@ -17,17 +17,24 @@ npm install
 
 ### Single Command (Recommended)
 
-Run seeding and start the server in one command:
+Run seeding, start the API server, and start the frontend in one command:
 
 ```bash
-npm run start
+npm run dev:all
 ```
 
 This will:
 
 1. Generate 1,000 users, 100 countries, and predefined roles
 2. Write data to `db.json`
-3. Start the JSON Server on port 1008
+3. Start the JSON Server API on port 1008 (blue output)
+4. Start the Next.js frontend dev server (green output)
+
+**Alternative:** If you only need the API server without the frontend:
+
+```bash
+npm run start
+```
 
 ### Individual Commands
 
