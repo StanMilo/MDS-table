@@ -7,6 +7,7 @@
     "seed": "tsx scripts/seed.ts",
     "dev": "json-server --watch db.json --port 1008",
     "start": "npm run seed && json-server --watch db.json --port 1008",
+    "dev:all": "npm run seed && concurrently --names \"API,FRONTEND\" --prefix-colors \"blue,green\" \"npm run dev\" \"npm run next:dev\"",
     "clean": "rimraf db.json",
     "next:dev": "next dev",
     "next:build": "next build",
@@ -33,6 +34,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
+    "concurrently": "^9.2.1",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",

@@ -73,7 +73,7 @@ export default function UsersTableClient({
       if (newRoleName && newRoleName.trim())
         params.set("roleName", newRoleName.trim());
 
-      router.push(`/?${params.toString()}`);
+      router.push(`/users?${params.toString()}`);
     },
     [router]
   );
