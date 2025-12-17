@@ -11,6 +11,8 @@ interface UsersPageProps {
     search?: string;
     countryId?: string;
     roleName?: string;
+    sortBy?: string;
+    sortOrder?: string;
   }>;
 }
 
@@ -23,6 +25,8 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
   const search = queryParams.search;
   const countryId = queryParams.countryId;
   const roleName = queryParams.roleName;
+  const sortBy = queryParams.sortBy;
+  const sortOrder = queryParams.sortOrder;
 
   return (
     <Container maxWidth="lg">
@@ -55,6 +59,8 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
           search={search}
           countryId={countryId}
           roleName={roleName}
+          sortBy={sortBy}
+          sortOrder={sortOrder}
         />
       </Box>
     </Container>

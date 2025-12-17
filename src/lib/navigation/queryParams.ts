@@ -1,4 +1,6 @@
-export interface QueryParams {
+import { SortParams } from "../../types/user";
+
+export interface QueryParams extends SortParams {
   page?: number;
   limit?: number;
   search?: string;
@@ -15,46 +17,52 @@ export function buildQueryParams(params: QueryParams): URLSearchParams {
   if (params.limit !== undefined) {
     urlParams.set("limit", params.limit.toString());
   }
-  if (params.search && params.search.trim()) {
+  if (params.search?.trim()) {
     urlParams.set("search", params.search.trim());
   }
-  if (params.countryId && params.countryId.trim()) {
+  if (params.countryId?.trim()) {
     urlParams.set("countryId", params.countryId.trim());
   }
-  if (params.roleName && params.roleName.trim()) {
+  if (params.roleName?.trim()) {
     urlParams.set("roleName", params.roleName.trim());
+  }
+  if (params.sortBy?.trim()) {
+    urlParams.set("sortBy", params.sortBy.trim());
+  }
+  if (params.sortOrder) {
+    urlParams.set("sortOrder", params.sortOrder);
   }
 
   return urlParams;
 }
+
+const getParam = (value: string | string[] | undefined): string | undefined => {
+  return Array.isArray(value) ? value[0] : value;
+};
 
 export function parseQueryParams(
   params: Record<string, string | string[] | undefined>
 ): QueryParams {
   const result: QueryParams = {};
 
-  if (params.page) {
-    const page = Array.isArray(params.page) ? params.page[0] : params.page;
-    result.page = parseInt(page, 10);
+  const pageStr = getParam(params.page);
+  if (pageStr) {
+    result.page = parseInt(pageStr, 10);
   }
-  if (params.limit) {
-    const limit = Array.isArray(params.limit) ? params.limit[0] : params.limit;
-    result.limit = parseInt(limit, 10);
+
+  const limitStr = getParam(params.limit);
+  if (limitStr) {
+    result.limit = parseInt(limitStr, 10);
   }
-  if (params.search) {
-    result.search = Array.isArray(params.search)
-      ? params.search[0]
-      : params.search;
-  }
-  if (params.countryId) {
-    result.countryId = Array.isArray(params.countryId)
-      ? params.countryId[0]
-      : params.countryId;
-  }
-  if (params.roleName) {
-    result.roleName = Array.isArray(params.roleName)
-      ? params.roleName[0]
-      : params.roleName;
+
+  result.search = getParam(params.search);
+  result.countryId = getParam(params.countryId);
+  result.roleName = getParam(params.roleName);
+  result.sortBy = getParam(params.sortBy);
+
+  const sortOrderStr = getParam(params.sortOrder);
+  if (sortOrderStr === "asc" || sortOrderStr === "desc") {
+    result.sortOrder = sortOrderStr;
   }
 
   return result;

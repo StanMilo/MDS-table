@@ -1,12 +1,12 @@
 import { API } from "../constants/api";
 import { PAGINATION } from "../constants/pagination";
-import { User, FilterParams } from "../../types/user";
+import { User, FilterParamsWithSort } from "../../types/user";
 import { translations } from "../../translations";
 
 export async function fetchUsers(
   page: number = PAGINATION.DEFAULT_PAGE,
   limit: number = PAGINATION.DEFAULT_LIMIT,
-  filters: FilterParams = {}
+  filters: FilterParamsWithSort = {}
 ): Promise<{
   users: User[];
   totalCount: number;
@@ -25,6 +25,11 @@ export async function fetchUsers(
 
   if (filters.roleName) {
     params.append("role.name", filters.roleName);
+  }
+
+  if (filters.sortBy) {
+    params.append("_sort", filters.sortBy);
+    params.append("_order", filters.sortOrder || "asc");
   }
 
   const url = `${API.BASE_URL}${API.ENDPOINTS.USERS}?${params.toString()}`;

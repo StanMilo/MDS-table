@@ -32,6 +32,7 @@ export const translations = {
     role: "Role",
     allCountries: "All Countries",
     allRoles: "All Roles",
+    clearFilters: "Clear Filters",
   },
 } as const;
 

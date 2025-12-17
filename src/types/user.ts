@@ -24,8 +24,15 @@ export interface Role {
   name: string;
 }
 
+export interface SortParams {
+  sortBy?: string;
+  sortOrder?: "asc" | "desc";
+}
+
 export interface FilterParams {
   search?: string;
   countryId?: string;
   roleName?: string;
 }
+
+export type FilterParamsWithSort = FilterParams & SortParams;
