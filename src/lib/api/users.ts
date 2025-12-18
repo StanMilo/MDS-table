@@ -57,3 +57,20 @@ export async function fetchUsers(
     return { users: [], totalCount: 0 };
   }
 }
+
+export async function deleteUser(userId: string): Promise<void> {
+  const url = `${API.BASE_URL}${API.ENDPOINTS.USERS}/${userId}`;
+
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete user: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    throw error;
+  }
+}

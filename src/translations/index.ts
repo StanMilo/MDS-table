@@ -17,6 +17,7 @@ export const translations = {
     email: "Email",
     country: "Country",
     role: "Role",
+    actions: "Actions",
   },
   // Error messages
   errors: {
@@ -33,6 +34,13 @@ export const translations = {
     allCountries: "All Countries",
     allRoles: "All Roles",
     clearFilters: "Clear Filters",
+  },
+  // Dialog labels
+  dialog: {
+    deleteTitle: "Delete User",
+    deleteMessage: "Are you sure you want to delete this user:",
+    cancel: "Cancel",
+    delete: "Delete",
   },
 } as const;
 

@@ -4,16 +4,15 @@ interface ActionButtonProps extends ButtonProps {
   text: string;
 }
 
-export function ActionButton({ text, ...props }: ActionButtonProps) {
+export function ActionButton({
+  text,
+  variant = "action",
+  sx,
+  ...props
+}: ActionButtonProps) {
   return (
-    <Button
-      variant="outlined"
-      size="small"
-      sx={{ height: "40px" }}
-      {...props}
-    >
+    <Button variant={variant as any} size="small" sx={sx} {...props}>
       {text}
     </Button>
   );
 }
-

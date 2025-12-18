@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import {
   Table,
@@ -18,12 +18,19 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
 } from "@mui/material";
 import { PAGINATION, DEBOUNCE } from "../../lib/constants/pagination";
 import { translations } from "../../translations";
 import { useDebounce } from "../../hooks/useDebounce";
 import { User, Country, Role } from "../../types/user";
 import { buildQueryParams } from "../../lib/navigation/queryParams";
+import { deleteUser } from "../../lib/api/users";
 import { StyledTableSortLabel } from "../components/ui/StyledTableSortLabel";
 import { ActionButton } from "../components/ui/ActionButton";
 
@@ -60,6 +67,8 @@ export default function UsersTableClient({
   const [roleName, setRoleName] = useState(initialRoleName);
   const [sortBy, setSortBy] = useState(initialSortBy);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(initialSortOrder);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [userIdToDelete, setUserIdToDelete] = useState<string | null>(null);
 
   const debouncedSearch = useDebounce(search, DEBOUNCE.SEARCH_DELAY);
   const isInitialMount = useRef(true);
@@ -165,6 +174,45 @@ export default function UsersTableClient({
     setSortOrder("asc");
     updateURL(PAGINATION.DEFAULT_PAGE, limit, "", "", "", "", "asc");
   };
+
+  const handleDeleteUser = (
+    userId: string,
+    event?: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    console.log("delete:", userId);
+    if (event?.currentTarget) {
+      event.currentTarget.blur();
+    }
+    setUserIdToDelete(userId);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!userIdToDelete) return;
+
+    try {
+      await deleteUser(userIdToDelete);
+      setDeleteDialogOpen(false);
+      setUserIdToDelete(null);
+      router.refresh();
+    } catch (error) {
+      console.error("Failed to delete user:", error);
+      setDeleteDialogOpen(false);
+      setUserIdToDelete(null);
+    }
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteDialogOpen(false);
+    setUserIdToDelete(null);
+  };
+
+  const deleteMessage = useMemo(() => {
+    const user = users.find((u) => u.id.toString() === userIdToDelete);
+    if (!user) return "";
+
+    return `${translations.dialog.deleteMessage} ${user.firstName} ${user.lastName}?`;
+  }, [userIdToDelete, users]);
 
   const hasActiveFilters = search || countryId || roleName || sortBy;
 
@@ -286,6 +334,7 @@ export default function UsersTableClient({
                   {translations.table.role}
                 </StyledTableSortLabel>
               </TableCell>
+              <TableCell>{translations.table.actions}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -305,6 +354,13 @@ export default function UsersTableClient({
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.country.name}</TableCell>
                 <TableCell>{user.role.name}</TableCell>
+                <TableCell>
+                  <ActionButton
+                    text={translations.dialog.delete}
+                    onClick={(e) => handleDeleteUser(user.id.toString(), e)}
+                    variant="table"
+                  />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -319,6 +375,30 @@ export default function UsersTableClient({
           rowsPerPageOptions={PAGINATION.ROWS_PER_PAGE_OPTIONS}
         />
       </TableContainer>
+
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleCancelDelete}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">
+          {translations.dialog.deleteTitle}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="delete-dialog-description">
+            {deleteMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete}>
+            {translations.dialog.cancel}
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            {translations.dialog.delete}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
