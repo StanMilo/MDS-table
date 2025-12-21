@@ -45,9 +45,10 @@ export function DesktopUsersTable({
         overflowX: "auto",
         maxWidth: "100%",
         boxShadow: 2,
+        position: "relative",
       }}
     >
-      <Table size="small">
+      <Table size="small" stickyHeader>
         <UsersTableHeader
           sortBy={sortBy}
           sortOrder={sortOrder}

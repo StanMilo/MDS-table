@@ -33,6 +33,9 @@ export function MobileSortHeader({
         mb: { xs: 1.5, sm: 2 },
         boxShadow: 2,
         backgroundColor: "primary.main",
+        position: "sticky",
+        top: { xs: 220, sm: 240 },
+        zIndex: 99,
       }}
     >
       <Box

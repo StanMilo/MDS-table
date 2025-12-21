@@ -26,6 +26,7 @@ export function UsersTableHeader({
           "& .MuiTableCell-root": {
             color: "primary.contrastText",
             fontWeight: 600,
+            backgroundColor: "primary.main",
           },
         }}
       >

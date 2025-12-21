@@ -43,6 +43,9 @@ export function FiltersBar({
         mb: { xs: 1.5, sm: 2 },
         boxShadow: 2,
         backgroundColor: "background.paper",
+        position: "sticky",
+        top: 0,
+        zIndex: 100,
       }}
     >
       <Box
