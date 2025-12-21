@@ -46,10 +46,25 @@ export default async function UsersPage({ searchParams }: UsersPageProps) {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3" component="h1" gutterBottom>
+          <Typography
+            variant="h3"
+            component="h1"
+            gutterBottom
+            sx={{
+              color: "primary.main",
+              fontWeight: 600,
+            }}
+          >
             {translations.page.title}
           </Typography>
-          <Typography variant="h5" component="h2" gutterBottom>
+          <Typography
+            variant="h5"
+            component="h2"
+            gutterBottom
+            sx={{
+              color: "text.secondary",
+            }}
+          >
             {translations.page.subtitle}
           </Typography>
         </Box>

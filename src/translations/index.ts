@@ -7,7 +7,7 @@ export const translations = {
   // Page content
   page: {
     title: "MDS task",
-    subtitle: "Responsive table frontend",
+    subtitle: "Users table",
   },
   // Table headers
   table: {

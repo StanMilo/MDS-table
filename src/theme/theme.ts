@@ -7,9 +7,24 @@ const theme = createTheme({
     mode: "light",
     primary: {
       main: "#1976d2",
+      light: "#42a5f5",
+      dark: "#1565c0",
     },
     secondary: {
       main: "#dc004e",
+      light: "#e33371",
+      dark: "#9a0036",
+    },
+    background: {
+      default: "#f5f7fa",
+      paper: "#ffffff",
+    },
+    error: {
+      main: "#d32f2f",
+    },
+    text: {
+      primary: "#1a202c",
+      secondary: "#4a5568",
     },
   },
   components: {
