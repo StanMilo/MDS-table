@@ -22,11 +22,18 @@ export function UsersTableHeader({
     <TableHead>
       <TableRow
         sx={{
+          position: "sticky",
+          top: 0,
+          zIndex: 10,
           backgroundColor: "primary.main",
           "& .MuiTableCell-root": {
+            backgroundColor: "primary.main",
             color: "primary.contrastText",
             fontWeight: 600,
-            backgroundColor: "primary.main",
+            whiteSpace: "nowrap",
+            position: "sticky",
+            top: 0,
+            zIndex: 10,
           },
         }}
       >

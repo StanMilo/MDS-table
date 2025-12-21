@@ -5,6 +5,7 @@ import {
   TablePagination,
   Paper,
 } from "@mui/material";
+import { useEffect, useRef } from "react";
 import { User } from "../../../types/user";
 import { PAGINATION } from "../../../lib/constants/pagination";
 import { UsersTableHeader } from "./UsersTableHeader";
@@ -38,17 +39,28 @@ export function DesktopUsersTable({
   onRowsPerPageChange,
   onDelete,
 }: DesktopUsersTableProps) {
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (tableContainerRef.current) {
+      tableContainerRef.current.scrollTop = 0;
+    }
+  }, [sortBy, sortOrder]);
+
   return (
     <TableContainer
+      ref={tableContainerRef}
       component={Paper}
       sx={{
+        maxHeight: "calc(100vh - 110px)",
+        overflowY: "auto",
         overflowX: "auto",
         maxWidth: "100%",
         boxShadow: 2,
         position: "relative",
       }}
     >
-      <Table size="small" stickyHeader>
+      <Table size="small">
         <UsersTableHeader
           sortBy={sortBy}
           sortOrder={sortOrder}

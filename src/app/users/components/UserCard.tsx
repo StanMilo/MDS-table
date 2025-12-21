@@ -41,7 +41,7 @@ export function UserCard({ user, onDelete }: UserCardProps) {
           color: "error.main",
           padding: { xs: 0.75, sm: 1 },
           "& .MuiSvgIcon-root": {
-            fontSize: { xs: "1.125rem", sm: "1.25rem" },
+            fontSize: { xs: "1.375rem", sm: "1.5rem" },
           },
           "&:hover": {
             backgroundColor: "rgba(211, 47, 47, 0.08)",

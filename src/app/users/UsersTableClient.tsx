@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery } from "@mui/material";
 import { User, Country, Role } from "../../types/user";
 import { useUsersFilters } from "../../hooks/useUsersFilters";
 import { useDeleteUser } from "../../hooks/useDeleteUser";
@@ -36,8 +36,7 @@ export default function UsersTableClient({
   initialSortBy,
   initialSortOrder,
 }: UsersTableClientProps) {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery("(max-width: 799px)");
 
   const {
     search,
