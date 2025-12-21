@@ -166,3 +166,55 @@ Simply navigate to:
   "name": "Administrator"
 }
 ```
+
+## Application Documentation
+
+### Basic App Functionalities
+
+This is a user management application built with Next.js and Material-UI. Application provides an interface for displaying users with the following features:
+
+#### User Display & Navigation
+
+- **Responsive Views**: Table view for desktop/tablet, card view for mobile devices
+- **Pagination**: Navigate through users with adjustable page sizes variating from 10, 25, 50
+- **User Information**: Display user avatars, names, emails, countries, and roles
+
+#### Search & Filtering
+
+- **Search**: Search users by name or email
+- **Country Filter**: Filter users by their country
+- **Role Filter**: Filter users by their role (Administrator, User, etc.)
+- **Clear Filters**: Reset all filters
+
+#### Sorting
+
+- **Sorting**: Sort by first name, last name, email, country, or role
+- **Ascending/Descending**: Toggle sort direction by clicking column headers, active sort field is highlighted with color
+
+#### User Management
+
+- **Delete Users**: Remove users from the data base with a confirmation dialog
+
+### Project Structure
+
+#### Main Folders in `src/`
+
+- **`app/`**: Next.js App Router pages and components
+
+  - Server Components: `page.tsx`, `UsersTable.tsx` (handle data fetching)
+  - Client Components: `UsersTableClient.tsx` and all components in `app/users/components/`
+  - Shared UI components: `app/components/ui/`
+
+- **`hooks/`**: Custom React hooks for filters, pagination, user deletion, and debouncing
+
+- **`lib/`**: Utility libraries
+
+  - `api/`: API client functions for users, countries, and roles
+  - `constants/`: Application constants (API config, pagination defaults)
+  - `navigation/`: URL query parameter parsing utilities
+
+- **`types/`**: TypeScript type definitions (User, Country, Role interfaces)
+
+- **`theme/`**: Material-UI theme configuration
+
+- **`translations/`**: Internationalization strings and labels
